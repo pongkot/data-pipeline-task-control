@@ -1,12 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { CostRateRepository } from './cost-rate';
+import { CostRateService } from './cost-rate/CostRateService';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly costRateRepository: CostRateRepository,
+    private readonly costRateService: CostRateService,
   ) {}
 
   @Get()
@@ -16,6 +16,6 @@ export class AppController {
 
   @Get('/test')
   getCostRate() {
-    return this.costRateRepository.listCostRates();
+    return this.costRateService.getActiveCostRates();
   }
 }
