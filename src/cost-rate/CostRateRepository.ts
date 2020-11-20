@@ -3,7 +3,7 @@ import { AppLogger, Mongo } from '../common';
 import { ICostRateSchema } from '../htdocs/schema/mongo/nipa-mail';
 import { from, Observable } from 'rxjs';
 import { Inject, Injectable } from '@nestjs/common';
-import { CONFIGURATION, LOGGER } from '../common/token';
+import { CONFIGURATION, APP_LOGGER } from '../common/token';
 import { IConfig, IDatabaseOption } from '../common/interfaces';
 import { map, mergeAll } from 'rxjs/operators';
 import { Mapping } from '../common/token/Mapping';
@@ -14,7 +14,7 @@ export class CostRateRepository
   extends Mongo<ICostRateSchema>
   implements ICostRateRepository {
   constructor(
-    @Inject(LOGGER)
+    @Inject(APP_LOGGER)
     private readonly logger: AppLogger,
     @Inject(CONFIGURATION)
     private readonly configuration: IConfig,

@@ -1,3 +1,3 @@
 export * from './Repository';
 export const CONFIGURATION = 'configuration';
-export const LOGGER = 'appLogger';
+export const APP_LOGGER = 'AppLogger';

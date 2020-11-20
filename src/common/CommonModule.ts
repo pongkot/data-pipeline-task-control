@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { CONFIGURATION, LOGGER } from './token';
+import { CONFIGURATION, APP_LOGGER } from './token';
 import { config } from './config';
 import { AppLogger } from './AppLogger';
 
 @Module({
   providers: [
     {
-      provide: LOGGER,
+      provide: APP_LOGGER,
       useClass: AppLogger,
     },
     {
@@ -14,6 +14,6 @@ import { AppLogger } from './AppLogger';
       useValue: config,
     },
   ],
-  exports: [LOGGER, CONFIGURATION],
+  exports: [APP_LOGGER, CONFIGURATION],
 })
 export class CommonModule {}
