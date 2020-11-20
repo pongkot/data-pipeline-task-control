@@ -23,6 +23,6 @@ import { Service } from '../common/token/Service';
       useClass: CostRateService,
     },
   ],
-  exports: [CostRateService],
+  exports: [Service.COST_RATE],
 })
 export class CostRateModule {}
