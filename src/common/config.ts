@@ -7,6 +7,7 @@ export const config: IConfig = {
   application: {
     port: _.toNumber(_.get(ENV, 'PORT', 3000)),
   },
+  // TODO review it
   rabbitmq: {
     facebookInsightAccount: {
       endpoint: _.get(ENV, 'DATA_PIPELINE_RMQ_HOST', 'amqp://localhost:5672'),
@@ -15,6 +16,7 @@ export const config: IConfig = {
   },
   database: {
     mongodb: {
+      // TODO review it
       dataPipeline: {
         host: _.get(ENV, 'MONGO_DATA_PIPELINE_HOST', 'localhost'),
         user: _.get(ENV, 'MONGO_DATA_PIPELINE_USER', ''),

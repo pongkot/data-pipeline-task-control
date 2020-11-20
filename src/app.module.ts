@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { CostRateModule } from './cost-rate';
 
 @Module({
-  imports: [CostRateModule],
+  imports: [],
   controllers: [AppController],
   providers: [AppService],
 })
