@@ -3,10 +3,9 @@ import { AppLogger, Mongo } from '../common';
 import { IAdsAccountSchema } from '../htdocs/schema/mongo/nipa-mail';
 import { IAdsAccountModel, IAdsAccountRepository, Product } from './interfaces';
 import { from, Observable } from 'rxjs';
-import { APP_LOGGER, CONFIGURATION } from '../common/token';
+import { APP_LOGGER, CONFIGURATION, Mapping } from '../common/token';
 import { IConfig, IDatabaseOption } from '../common/interfaces';
 import { map, mergeAll } from 'rxjs/operators';
-import { Mapping } from '../common/token/Mapping';
 import { AdsAccountMapping } from './AdsAccountMapping';
 
 @Injectable()
