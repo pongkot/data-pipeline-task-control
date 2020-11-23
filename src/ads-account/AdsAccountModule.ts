@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CommonModule } from '../common/CommonModule';
-import { Mapping } from '../common/token/Mapping';
+import { Mapping } from '../common/token';
 import { AdsAccountMapping } from './AdsAccountMapping';
 import { Repository, Service } from '../common/token';
 import { AdsAccountRepository } from './AdsAccountRepository';
