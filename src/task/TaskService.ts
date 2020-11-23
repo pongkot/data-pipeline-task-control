@@ -1,7 +1,7 @@
 import { ITaskService } from './interfaces';
 import { Observable } from 'rxjs';
 import { Inject, Injectable } from '@nestjs/common';
-import { APP_LOGGER, Repository, Service } from '../common/token';
+import { APP_LOGGER, Mapping, Repository, Service } from '../common/token';
 import { CostRateService } from '../cost-rate';
 import { AdsAccountService } from '../ads-account';
 import { map, mergeMap } from 'rxjs/operators';
@@ -11,7 +11,8 @@ import { AppLogger } from '../common';
 import { ConfigurationRepository } from '../configuration';
 import { IConfigurationModel } from '../configuration/interfaces';
 import { EncryptionService } from '../encryption';
-import { FacebookInsightLvAccountByDateModel } from '../facebook-insight/models';
+import { FacebookInsightLvAccountByDateTaskModel } from '../facebook-insight/models';
+import { TaskMapping } from './TaskMapping';
 
 @Injectable()
 export class TaskService implements ITaskService {
@@ -24,6 +25,8 @@ export class TaskService implements ITaskService {
     private readonly adsAccount: AdsAccountService,
     @Inject(Service.ENCRYPTION)
     private readonly encryptionService: EncryptionService,
+    @Inject(Mapping.TASK)
+    private readonly taskMapping: TaskMapping,
     @Inject(Repository.CONFIGURATION)
     private readonly configurationRepository: ConfigurationRepository,
   ) {
@@ -33,7 +36,7 @@ export class TaskService implements ITaskService {
   getFacebookInsightLvAccountByDate(
     since: Date,
     until: Date,
-  ): Observable<FacebookInsightLvAccountByDateModel> {
+  ): Observable<FacebookInsightLvAccountByDateTaskModel> {
     return this.configurationRepository
       .getConfigById('FACEBOOK_ACCESS_TOKEN')
       .pipe(
@@ -81,7 +84,9 @@ export class TaskService implements ITaskService {
                   timeRange: { since, until },
                   costRate: adsAccountCostRate.costRate,
                 };
-                return new FacebookInsightLvAccountByDateModel(doc);
+                return this.taskMapping.serializeToFacebookInsightLvAccountTask(
+                  doc,
+                );
               },
             ),
           ),

@@ -4,10 +4,12 @@ import { Service } from '../common/token';
 import { CommonModule } from '../common/CommonModule';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { Queue } from '../common/token/Queue';
+import { TaskModule } from '../task';
 
 @Module({
   imports: [
     CommonModule,
+    TaskModule,
     ClientsModule.register([
       {
         name: Queue.FACEBOOK_INSIGHT,

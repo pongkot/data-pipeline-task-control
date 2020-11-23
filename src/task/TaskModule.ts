@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { Service } from '../common/token';
+import { Mapping, Service } from '../common/token';
 import { TaskService } from './TaskService';
 import { AdsAccountModule } from '../ads-account';
 import { CommonModule } from '../common/CommonModule';
 import { ConfigurationModule } from '../configuration';
 import { EncryptionModule } from '../encryption';
 import { CostRateModule } from '../cost-rate';
+import { TaskMapping } from './TaskMapping';
 
 @Module({
   imports: [
@@ -20,7 +21,11 @@ import { CostRateModule } from '../cost-rate';
       provide: Service.TASK,
       useClass: TaskService,
     },
+    {
+      provide: Mapping.TASK,
+      useClass: TaskMapping,
+    },
   ],
-  exports: [Service.TASK],
+  exports: [Service.TASK, Mapping.TASK],
 })
 export class TaskModule {}

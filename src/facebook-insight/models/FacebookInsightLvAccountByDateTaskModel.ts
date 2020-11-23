@@ -1,6 +1,6 @@
 import { IFacebookInsightLvAccountByDateModel } from '../interfaces';
 
-export class FacebookInsightLvAccountByDateModel
+export class FacebookInsightLvAccountByDateTaskModel
   implements IFacebookInsightLvAccountByDateModel {
   private readonly adsAccountId: string;
   private readonly adsAccountStatus: string;
