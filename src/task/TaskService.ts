@@ -11,7 +11,7 @@ import { AppLogger } from '../common';
 import { ConfigurationRepository } from '../configuration';
 import { IConfigurationModel } from '../configuration/interfaces';
 import { EncryptionService } from '../encryption';
-import { FacebookInsightLvAccountByDateModel } from './FacebookInsightLvAccountByDateModel';
+import { FacebookInsightLvAccountByDateModel } from '../facebook-insight/models';
 
 @Injectable()
 export class TaskService implements ITaskService {

@@ -1,11 +1,11 @@
 import { IProducerService } from './interfaces';
 import { Inject, Injectable } from '@nestjs/common';
-import { FacebookInsightLvAccountByDateModel } from '../task';
 import { APP_LOGGER } from '../common/token';
 import { AppLogger } from '../common';
 import { Queue } from '../common/token/Queue';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable, of } from 'rxjs';
+import { FacebookInsightLvAccountByDateModel } from '../facebook-insight/models';
 
 @Injectable()
 export class ProducerService implements IProducerService {

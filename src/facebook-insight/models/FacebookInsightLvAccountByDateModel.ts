@@ -1,4 +1,4 @@
-import { IFacebookInsightLvAccountByDateModel } from './interfaces';
+import { IFacebookInsightLvAccountByDateModel } from '../interfaces';
 
 export class FacebookInsightLvAccountByDateModel
   implements IFacebookInsightLvAccountByDateModel {

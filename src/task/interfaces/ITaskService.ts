@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { FacebookInsightLvAccountByDateModel } from '../FacebookInsightLvAccountByDateModel';
+import { FacebookInsightLvAccountByDateModel } from '../../facebook-insight/models';
 
 export interface ITaskService {
   getFacebookInsightLvAccountByDate(
