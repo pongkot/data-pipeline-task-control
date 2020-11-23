@@ -29,7 +29,6 @@ export class EncryptionService implements IEncryptionService {
       decipher.update(Buffer.from(content[1], 'hex')),
       decipher.final(),
     ]);
-
     return decrypted.toString();
   }
 

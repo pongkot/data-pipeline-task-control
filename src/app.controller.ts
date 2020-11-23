@@ -2,6 +2,7 @@ import { Controller, Get, Inject } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Service } from './common/token';
 import { TaskService } from './task';
+import { toArray } from 'rxjs/operators';
 
 @Controller()
 export class AppController {
@@ -18,9 +19,11 @@ export class AppController {
 
   @Get('/test')
   test() {
-    return this.taskService.getFacebookInsightLvAccountByDate(
-      new Date('2020-10-14'),
-      new Date('2020-10-14'),
-    );
+    return this.taskService
+      .getFacebookInsightLvAccountByDate(
+        new Date('2020-10-14'),
+        new Date('2020-10-14'),
+      )
+      .pipe(toArray());
   }
 }
