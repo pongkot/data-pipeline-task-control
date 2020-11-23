@@ -15,5 +15,6 @@ import { CommonModule } from '../common/CommonModule';
       useClass: ConfigurationMapping,
     },
   ],
+  exports: [Repository.CONFIGURATION],
 })
 export class ConfigurationModule {}

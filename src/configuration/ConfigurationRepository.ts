@@ -1,9 +1,9 @@
 import { AppLogger, Mongo } from '../common';
-import { IConfigurationRepository } from './interfaces/IConfigurationRepository';
+import { IConfigurationRepository } from './interfaces';
 import { IConfigurationsSchema } from '../htdocs/schema/mongo/nipa-mail';
 import { IConfig, IDatabaseOption } from '../common/interfaces';
 import { from, Observable } from 'rxjs';
-import { IConfigurationModel } from './interfaces/IConfigurationModel';
+import { IConfigurationModel } from './interfaces';
 import { Inject, Injectable } from '@nestjs/common';
 import { map } from 'rxjs/operators';
 import { APP_LOGGER, CONFIGURATION, Mapping } from '../common/token';
