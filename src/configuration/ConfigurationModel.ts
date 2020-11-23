@@ -1,4 +1,4 @@
-import { IConfigurationModel } from './interfaces/IConfigurationModel';
+import { IConfigurationModel } from './interfaces';
 
 export class ConfigurationModel implements IConfigurationModel {
   private _id: string;

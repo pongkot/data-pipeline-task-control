@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IConfigurationModel } from './interfaces/IConfigurationModel';
+import { IConfigurationModel } from './interfaces';
 import { IConfigurationsSchema } from '../htdocs/schema/mongo/nipa-mail';
 import { ConfigurationModel } from './ConfigurationModel';
 import { MappingCore } from '../common';

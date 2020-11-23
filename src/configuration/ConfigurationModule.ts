@@ -2,13 +2,14 @@ import { Module } from '@nestjs/common';
 import { Mapping, Repository } from '../common/token';
 import { ConfigurationMapping } from './ConfigurationMapping';
 import { CommonModule } from '../common/CommonModule';
+import { ConfigurationRepository } from './ConfigurationRepository';
 
 @Module({
   imports: [CommonModule],
   providers: [
     {
       provide: Repository.CONFIGURATION,
-      useClass: ConfigurationModule,
+      useClass: ConfigurationRepository,
     },
     {
       provide: Mapping.CONFIGURATION,
