@@ -10,18 +10,19 @@ import { ICostRateModel } from '../cost-rate/interface';
 import { AppLogger } from '../common';
 import { ConfigurationRepository } from '../configuration';
 import { IConfigurationModel } from '../configuration/interfaces';
+import { EncryptionService } from '../encryption';
 
-// TODO inject config service
-// TODO inject encrypt
 @Injectable()
 export class TaskService implements ITaskService {
   constructor(
+    @Inject(APP_LOGGER)
+    private readonly logger: AppLogger,
     @Inject(Service.COST_RATE)
     private readonly costRateService: CostRateService,
     @Inject(Service.ADS_ACCOUNT)
     private readonly adsAccount: AdsAccountService,
-    @Inject(APP_LOGGER)
-    private readonly logger: AppLogger,
+    @Inject(Service.ENCRYPTION)
+    private readonly encryptionService: EncryptionService,
     @Inject(Repository.CONFIGURATION)
     private readonly configurationRepository: ConfigurationRepository,
   ) {
@@ -50,7 +51,9 @@ export class TaskService implements ITaskService {
               _id: adsAccountProductFacebookModel.getId(),
               adsAccountId: adsAccountProductFacebookModel.getAdsAccountId(),
               status: adsAccountProductFacebookModel.getStatus(),
-              accessToken: configModel.getValue(),
+              accessToken: this.encryptionService.encrypt(
+                configModel.getValue(),
+              ),
             })),
             mergeMap(
               (adsAccount: {
