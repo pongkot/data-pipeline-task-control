@@ -11,6 +11,7 @@ import { AppLogger } from '../common';
 import { ConfigurationRepository } from '../configuration';
 import { IConfigurationModel } from '../configuration/interfaces';
 import { EncryptionService } from '../encryption';
+import { FacebookInsightLvAccountByDateModel } from './FacebookInsightLvAccountByDateModel';
 
 @Injectable()
 export class TaskService implements ITaskService {
@@ -32,16 +33,7 @@ export class TaskService implements ITaskService {
   getFacebookInsightLvAccountByDate(
     since: Date,
     until: Date,
-  ): Observable<{
-    adsAccount: {
-      id: string;
-      status: string;
-    };
-    facebookAccessToken: string;
-    timeRange: { since: Date; until: Date };
-    costRate: number;
-    metadata: { createAt: number };
-  }> {
+  ): Observable<FacebookInsightLvAccountByDateModel> {
     return this.configurationRepository
       .getConfigById('FACEBOOK_ACCESS_TOKEN')
       .pipe(
@@ -80,7 +72,7 @@ export class TaskService implements ITaskService {
                 costRate: number;
                 accessToken: string;
               }) => {
-                return {
+                const doc = {
                   adsAccount: {
                     id: adsAccountCostRate.adsAccountId,
                     status: adsAccountCostRate.status,
@@ -88,8 +80,8 @@ export class TaskService implements ITaskService {
                   facebookAccessToken: adsAccountCostRate.accessToken,
                   timeRange: { since, until },
                   costRate: adsAccountCostRate.costRate,
-                  metadata: { createAt: new Date().getTime() },
                 };
+                return new FacebookInsightLvAccountByDateModel(doc);
               },
             ),
           ),
