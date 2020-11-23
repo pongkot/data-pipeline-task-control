@@ -6,7 +6,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CONFIGURATION, APP_LOGGER } from '../common/token';
 import { IConfig, IDatabaseOption } from '../common/interfaces';
 import { map, mergeAll } from 'rxjs/operators';
-import { Mapping } from '../common/token/Mapping';
+import { Mapping } from '../common/token';
 import { CostRateMapping } from './CostRateMapping';
 
 @Injectable()

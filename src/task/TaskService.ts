@@ -1,12 +1,13 @@
 import { ITaskService } from './interfaces';
 import { Observable } from 'rxjs';
 import { Inject, Injectable } from '@nestjs/common';
-import { Service } from '../common/token';
+import { APP_LOGGER, Service } from '../common/token';
 import { CostRateService } from '../cost-rate';
 import { AdsAccountService } from '../ads-account';
 import { map, mergeMap } from 'rxjs/operators';
 import { IAdsAccountModel } from '../ads-account/interfaces';
 import { ICostRateModel } from '../cost-rate/interface';
+import { AppLogger } from '../common';
 
 // TODO inject config service
 // TODO inject encrypt
@@ -17,7 +18,11 @@ export class TaskService implements ITaskService {
     private readonly costRateService: CostRateService,
     @Inject(Service.ADS_ACCOUNT)
     private readonly adsAccount: AdsAccountService,
-  ) {}
+    @Inject(APP_LOGGER)
+    private readonly logger: AppLogger,
+  ) {
+    this.logger.setContext('TaskService');
+  }
 
   getFacebookInsightLvAccountByDate(
     period: Date,
