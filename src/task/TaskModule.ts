@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { Service } from '../common/token';
 import { TaskService } from './TaskService';
-import { AdsAccountService } from '../ads-account';
-import { CostRateService } from '../cost-rate';
+import { AdsAccountModule } from '../ads-account';
+import { CommonModule } from '../common/CommonModule';
 
 @Module({
-  imports: [AdsAccountService, CostRateService],
+  imports: [AdsAccountModule, CommonModule],
   providers: [
     {
       provide: Service.TASK,
