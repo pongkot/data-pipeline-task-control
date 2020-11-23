@@ -3,4 +3,5 @@ export const enum Service {
   ADS_ACCOUNT = 'AdsAccountService',
   TASK = 'TaskService',
   ENCRYPTION = 'EncryptionService',
+  PRODUCER = 'ProducerService',
 }

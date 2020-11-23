@@ -2,7 +2,8 @@ import { Controller, Get, Inject } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Service } from './common/token';
 import { TaskService } from './task';
-import { toArray } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
+import { ProducerService } from './producer';
 
 @Controller()
 export class AppController {
@@ -10,6 +11,8 @@ export class AppController {
     private readonly appService: AppService,
     @Inject(Service.TASK)
     private readonly taskService: TaskService,
+    @Inject(Service.PRODUCER)
+    private readonly producerService: ProducerService,
   ) {}
 
   @Get()
@@ -24,6 +27,8 @@ export class AppController {
         new Date('2020-10-14'),
         new Date('2020-10-14'),
       )
-      .pipe(toArray());
+      .pipe(
+        mergeMap((model) => this.producerService.sendToFacebookInsight(model)),
+      );
   }
 }
