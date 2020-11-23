@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from '../common/token';
-import { filter, map, mergeAll, mergeMap, toArray } from 'rxjs/operators';
+import { filter, map, mergeAll, toArray } from 'rxjs/operators';
 import { ICostRateModel, ICostRateService } from './interface';
 import { CostRateRepository } from './CostRateRepository';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class CostRateService implements ICostRateService {
@@ -29,15 +29,10 @@ export class CostRateService implements ICostRateService {
   }
 
   getCostRateByAdsAccountRecordId(id: string): Observable<ICostRateModel> {
-    return of(id).pipe(
-      mergeMap((adsAccountRecordId: string) =>
-        this.getActiveCostRates().pipe(
-          mergeAll(),
-          filter(
-            (model: ICostRateModel) =>
-              model.getAdsAccountId() === adsAccountRecordId, // getAdsAccountId refer to adsAccountId._id
-          ),
-        ),
+    return this.getActiveCostRates().pipe(
+      mergeAll(),
+      filter(
+        (model: ICostRateModel) => model.getAdsAccountId() === id, // getAdsAccountId refer to adsAccountId._id
       ),
     );
   }
