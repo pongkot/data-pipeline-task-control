@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { CommonModule } from '../common/CommonModule';
 import { Repository } from '../common/token';
 import { CostRateRepository } from './CostRateRepository';
-import { Mapping } from '../common/token/Mapping';
+import { Mapping } from '../common/token';
 import { CostRateMapping } from './CostRateMapping';
 import { CostRateService } from './CostRateService';
-import { Service } from '../common/token/Service';
+import { Service } from '../common/token';
 
 @Module({
   imports: [CommonModule],

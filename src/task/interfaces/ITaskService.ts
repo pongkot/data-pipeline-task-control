@@ -1,10 +1,13 @@
 import { Observable } from 'rxjs';
 
-export interface TaskService {
+export interface ITaskService {
   getFacebookInsightLvAccountByDate(
     period: Date,
   ): Observable<{
-    adsAccountId: string;
+    adsAccount: {
+      id: string;
+      status: string;
+    };
     facebookAccessToken: string;
     timeRange: {
       since: Date;
