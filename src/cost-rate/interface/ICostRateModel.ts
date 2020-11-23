@@ -11,7 +11,7 @@ export interface ICostRateModel {
 
   getId(): string;
 
-  getAdsAccountId(): string;
+  getAdsAccountId(): string; // refer to adsAccountId._id
 
   getRate(): number;
 
