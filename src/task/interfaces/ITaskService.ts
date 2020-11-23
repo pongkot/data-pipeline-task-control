@@ -2,7 +2,8 @@ import { Observable } from 'rxjs';
 
 export interface ITaskService {
   getFacebookInsightLvAccountByDate(
-    period: Date,
+    since: Date,
+    until: Date,
   ): Observable<{
     adsAccount: {
       id: string;

@@ -29,7 +29,8 @@ export class TaskService implements ITaskService {
   }
 
   getFacebookInsightLvAccountByDate(
-    period: Date,
+    since: Date,
+    until: Date,
   ): Observable<{
     adsAccount: {
       id: string;
@@ -82,7 +83,7 @@ export class TaskService implements ITaskService {
                     status: adsAccountCostRate.status,
                   },
                   facebookAccessToken: adsAccountCostRate.accessToken,
-                  timeRange: { since: period, until: period },
+                  timeRange: { since, until },
                   costRate: adsAccountCostRate.costRate,
                   metadata: { createAt: new Date().getTime() },
                 };
