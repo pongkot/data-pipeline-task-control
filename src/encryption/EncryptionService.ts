@@ -2,18 +2,11 @@ import { IEncryptionService } from './interfaces';
 import { Inject, Injectable } from '@nestjs/common';
 import { CONFIGURATION } from '../common/token';
 import { IConfig } from '../common/interfaces';
-import {
-  Cipher,
-  createCipheriv,
-  createDecipheriv,
-  Decipher,
-  randomBytes,
-} from 'crypto';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class EncryptionService implements IEncryptionService {
   private readonly algorithm = 'aes-256-ctr';
-  private readonly iv = randomBytes(16);
   private readonly secret: string;
 
   constructor(
@@ -23,28 +16,30 @@ export class EncryptionService implements IEncryptionService {
     this.secret = this.configuration.application.secret;
   }
 
-  decrypt(cipherText: string): string {
-    const cipher: Cipher = createCipheriv(
-      this.getAlgorithm(),
-      this.getSecret(),
-      this.getIv(),
+  decrypt(cipher: string): string {
+    const algorithm = this.getAlgorithm();
+    const secretKey = this.getSecret();
+    const content = cipher.split('.');
+    const decipher = crypto.createDecipheriv(
+      algorithm,
+      secretKey,
+      Buffer.from(content[0], 'hex'),
     );
-    return Buffer.concat([cipher.update(cipherText), cipher.final()]).toString(
-      'hex',
-    );
+    const decrypted = Buffer.concat([
+      decipher.update(Buffer.from(content[1], 'hex')),
+      decipher.final(),
+    ]);
+
+    return decrypted.toString();
   }
 
   encrypt(plainText: string): string {
-    const decipher: Decipher = createDecipheriv(
-      this.getAlgorithm(),
-      this.getSecret(),
-      Buffer.from(this.getIv().toString(), 'hex'),
-    );
-
-    return Buffer.concat([
-      decipher.update(Buffer.from(plainText, 'hex')),
-      decipher.final(),
-    ]).toString();
+    const algorithm = this.getAlgorithm();
+    const secretKey = this.getSecret();
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
+    const encrypted = Buffer.concat([cipher.update(plainText), cipher.final()]);
+    return `${iv.toString('hex')}.${encrypted.toString('hex')}`;
   }
 
   private getSecret(): string {
@@ -53,9 +48,5 @@ export class EncryptionService implements IEncryptionService {
 
   private getAlgorithm(): string {
     return this.algorithm;
-  }
-
-  private getIv(): Buffer {
-    return this.iv;
   }
 }

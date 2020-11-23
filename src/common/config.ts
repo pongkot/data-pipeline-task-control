@@ -6,7 +6,7 @@ const ENV: NodeJS.ProcessEnv = process.env;
 export const config: IConfig = {
   application: {
     port: _.toNumber(_.get(ENV, 'PORT', 3000)),
-    secret: '!QAZ2wsx#EDC4rfv',
+    secret: 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3',
   },
   // TODO review it
   rabbitmq: {
