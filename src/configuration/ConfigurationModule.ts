@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { Mapping, Repository } from '../common/token';
 import { ConfigurationMapping } from './ConfigurationMapping';
-import { CommonModule } from '../common/CommonModule';
+import { CommonModule } from '../common';
 import { ConfigurationRepository } from './ConfigurationRepository';
 
 @Module({
