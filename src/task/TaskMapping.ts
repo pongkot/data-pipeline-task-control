@@ -1,36 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { FacebookInsightLvAccountByDateTaskModel } from '../facebook-insight/models';
+import { IFacebookInsightLvAccountTaskSchema } from './interfaces';
 
 @Injectable()
 export class TaskMapping {
-  serializeToFacebookInsightLvAccountTask(doc: {
-    // TODO transform to interface
-    adsAccount: {
-      id: string;
-      status: string;
-    };
-    facebookAccessToken: string;
-    timeRange: { since: Date; until: Date };
-    costRate: number;
-  }): FacebookInsightLvAccountByDateTaskModel {
+  serializeToFacebookInsightLvAccountTask(
+    doc: IFacebookInsightLvAccountTaskSchema,
+  ): FacebookInsightLvAccountByDateTaskModel {
     return new FacebookInsightLvAccountByDateTaskModel(doc);
   }
 
   deserializeToFacebookInsightLvAccountTask(
     model: FacebookInsightLvAccountByDateTaskModel,
-  ): {
-    // TODO transform to interface
-    adsAccount: {
-      id: string;
-      status: string;
-    };
-    facebookAccessToken: string;
-    timeRange: { since: Date; until: Date };
-    costRate: number;
-    metadata: {
-      createAt: number;
-    };
-  } {
+  ): IFacebookInsightLvAccountTaskSchema {
     return {
       adsAccount: {
         id: model.getAdsAccountId(),

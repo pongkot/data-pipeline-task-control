@@ -1,4 +1,5 @@
 import { IFacebookInsightLvAccountByDateModel } from '../interfaces';
+import { IFacebookInsightLvAccountTaskSchema } from '../../task/interfaces';
 
 export class FacebookInsightLvAccountByDateTaskModel
   implements IFacebookInsightLvAccountByDateModel {
@@ -9,15 +10,7 @@ export class FacebookInsightLvAccountByDateTaskModel
   private readonly until: Date;
   private readonly rate: number;
 
-  constructor(data: {
-    adsAccount: {
-      id: string;
-      status: string;
-    };
-    facebookAccessToken: string;
-    timeRange: { since: Date; until: Date };
-    costRate: number;
-  }) {
+  constructor(data: IFacebookInsightLvAccountTaskSchema) {
     this.adsAccountId = data.adsAccount.id;
     this.adsAccountStatus = data.adsAccount.status;
     this.token = data.facebookAccessToken;
