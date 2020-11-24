@@ -4,4 +4,5 @@ export const enum Service {
   TASK = 'TaskService',
   ENCRYPTION = 'EncryptionService',
   PRODUCER = 'ProducerService',
+  SCHEDULER = 'SchedulerService',
 }

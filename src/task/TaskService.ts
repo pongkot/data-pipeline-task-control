@@ -40,8 +40,8 @@ export class TaskService implements ITaskService {
     return this.configurationRepository
       .getConfigById('FACEBOOK_ACCESS_TOKEN')
       .pipe(
-        mergeMap((configModel: IConfigurationModel) =>
-          this.adsAccount.getAdsAccountProductFacebook().pipe(
+        mergeMap((configModel: IConfigurationModel) => {
+          return this.adsAccount.getAdsAccountProductFacebook().pipe(
             map((adsAccountProductFacebookModel: IAdsAccountModel) => ({
               _id: adsAccountProductFacebookModel.getId(),
               adsAccountId: adsAccountProductFacebookModel.getAdsAccountId(),
@@ -74,23 +74,20 @@ export class TaskService implements ITaskService {
                 status: string;
                 costRate: number;
                 accessToken: string;
-              }) => {
-                const doc = {
+              }) =>
+                this.taskMapping.serializeToFacebookInsightLvAccountTask({
                   adsAccount: {
                     id: adsAccountCostRate.adsAccountId,
                     status: adsAccountCostRate.status,
                   },
-                  facebookAccessToken: adsAccountCostRate.accessToken,
-                  timeRange: { since, until },
                   costRate: adsAccountCostRate.costRate,
-                };
-                return this.taskMapping.serializeToFacebookInsightLvAccountTask(
-                  doc,
-                );
-              },
+                  facebookAccessToken: adsAccountCostRate.accessToken,
+                  metadata: { createAt: new Date().getTime() },
+                  timeRange: { since, until },
+                }),
             ),
-          ),
-        ),
+          );
+        }),
       );
   }
 }
