@@ -5,6 +5,7 @@ import { CommonModule } from '../common/CommonModule';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { Queue } from '../common/token/Queue';
 import { TaskModule } from '../task';
+import { config } from '../common/config';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { TaskModule } from '../task';
         name: Queue.FACEBOOK_INSIGHT,
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://guest:guest@localhost'],
+          urls: config.rabbitmq.urls,
           queue: Queue.FACEBOOK_INSIGHT,
           queueOptions: {
             durable: false,

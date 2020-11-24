@@ -4,6 +4,7 @@ import { FacebookInsightLvAccountByDateTaskModel } from '../facebook-insight/mod
 @Injectable()
 export class TaskMapping {
   serializeToFacebookInsightLvAccountTask(doc: {
+    // TODO transform to interface
     adsAccount: {
       id: string;
       status: string;
@@ -18,6 +19,7 @@ export class TaskMapping {
   deserializeToFacebookInsightLvAccountTask(
     model: FacebookInsightLvAccountByDateTaskModel,
   ): {
+    // TODO transform to interface
     adsAccount: {
       id: string;
       status: string;

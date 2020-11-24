@@ -4,9 +4,10 @@ import { APP_LOGGER, Mapping } from '../common/token';
 import { AppLogger } from '../common';
 import { Queue } from '../common/token/Queue';
 import { ClientProxy } from '@nestjs/microservices';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FacebookInsightLvAccountByDateTaskModel } from '../facebook-insight/models';
 import { TaskMapping } from '../task/TaskMapping';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class ProducerService implements IProducerService {
@@ -24,18 +25,18 @@ export class ProducerService implements IProducerService {
   sendToFacebookInsight(
     content: FacebookInsightLvAccountByDateTaskModel,
   ): Observable<{ message: string }> {
-    this.logger.log(
-      `sendToFacebookInsight: { adsAccountId: ${content.getAdsAccountId()} }`,
-    );
-    const doc = this.taskMapping.deserializeToFacebookInsightLvAccountTask(
+    // TODO assign type
+    const pattern = { cmd: 'facebookInsightLvAccount' };
+    // TODO assign type
+    const payload = this.taskMapping.deserializeToFacebookInsightLvAccountTask(
       content,
     );
-    this.facebookInsightClient
-      .send<FacebookInsightLvAccountByDateTaskModel>(
-        { cmd: 'FacebookInsightLvAccount' },
-        doc,
-      )
-      .subscribe();
-    return of({ message: 'success' });
+    return this.facebookInsightClient
+      .send<{ message: string }>(pattern, payload)
+      .pipe(
+        tap((e) => {
+          this.logger.log(e);
+        }),
+      );
   }
 }

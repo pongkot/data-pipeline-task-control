@@ -1,19 +1,18 @@
 import * as _ from 'lodash';
 import { IConfig } from './interfaces';
+import { Helper } from './Helper';
 
 const ENV: NodeJS.ProcessEnv = process.env;
 
 export const config: IConfig = {
   application: {
     port: _.toNumber(_.get(ENV, 'PORT', 3000)),
-    secret: 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3',
+    secret: _.get(ENV, 'SECRET', 'secret'),
   },
-  // TODO review it
   rabbitmq: {
-    facebookInsightAccount: {
-      endpoint: _.get(ENV, 'DATA_PIPELINE_RMQ_HOST', 'amqp://localhost:5672'),
-      prefetch: _.toNumber(_.get(ENV, 'DATA_PIPELINE_RMQ_PREFETCH', 1)),
-    },
+    urls: Helper.getArrayString(
+      _.get(ENV, 'DATA_PIPELINE_RMQ', 'amqp://localhost'),
+    ),
   },
   database: {
     mongodb: {
