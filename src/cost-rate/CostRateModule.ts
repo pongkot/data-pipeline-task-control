@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CommonModule } from '../common/CommonModule';
+import { CommonModule } from '../common';
 import { Repository } from '../common/token';
 import { CostRateRepository } from './CostRateRepository';
 import { Mapping } from '../common/token';

@@ -1,8 +1,7 @@
 import { IProducerService } from './interfaces';
 import { Inject, Injectable } from '@nestjs/common';
-import { APP_LOGGER, Mapping } from '../common/token';
+import { APP_LOGGER, Mapping, Queue } from '../common/token';
 import { AppLogger } from '../common';
-import { Queue } from '../common/token';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { FacebookInsightLvAccountByDateTaskModel } from '../facebook-insight/models';
@@ -34,7 +33,7 @@ export class ProducerService implements IProducerService {
       .pipe(
         tap(() => {
           this.logger.log(
-            `send task success, adsAccountId: ${content.getAdsAccountId()}`,
+            `send FacebookInsightLvAccount task success; adsAccountId: ${content.getAdsAccountId()}`,
           );
         }),
       );
