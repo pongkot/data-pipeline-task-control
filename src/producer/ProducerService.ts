@@ -2,7 +2,7 @@ import { IProducerService } from './interfaces';
 import { Inject, Injectable } from '@nestjs/common';
 import { APP_LOGGER, Mapping } from '../common/token';
 import { AppLogger } from '../common';
-import { Queue } from '../common/token/Queue';
+import { Queue } from '../common/token';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { FacebookInsightLvAccountByDateTaskModel } from '../facebook-insight/models';
@@ -25,9 +25,7 @@ export class ProducerService implements IProducerService {
   sendToFacebookInsight(
     content: FacebookInsightLvAccountByDateTaskModel,
   ): Observable<{ message: string }> {
-    // TODO assign type
     const pattern = { cmd: 'FacebookInsightLvAccount' };
-    // TODO assign type
     const payload = this.taskMapping.deserializeToFacebookInsightLvAccountTask(
       content,
     );
