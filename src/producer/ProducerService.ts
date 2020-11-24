@@ -26,7 +26,7 @@ export class ProducerService implements IProducerService {
     content: FacebookInsightLvAccountByDateTaskModel,
   ): Observable<{ message: string }> {
     // TODO assign type
-    const pattern = { cmd: 'facebookInsightLvAccount' };
+    const pattern = { cmd: 'FacebookInsightLvAccount' };
     // TODO assign type
     const payload = this.taskMapping.deserializeToFacebookInsightLvAccountTask(
       content,
@@ -34,8 +34,10 @@ export class ProducerService implements IProducerService {
     return this.facebookInsightClient
       .send<{ message: string }>(pattern, payload)
       .pipe(
-        tap((e) => {
-          this.logger.log(e);
+        tap(() => {
+          this.logger.log(
+            `send task success, adsAccountId: ${content.getAdsAccountId()}`,
+          );
         }),
       );
   }

@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ProducerService } from './ProducerService';
 import { Service } from '../common/token';
-import { CommonModule } from '../common/CommonModule';
+import { CommonModule } from '../common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { Queue } from '../common/token/Queue';
 import { TaskModule } from '../task';
-import { config } from '../common/config';
+import { config } from '../common';
 
 @Module({
   imports: [

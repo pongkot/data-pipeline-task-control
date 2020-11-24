@@ -7,7 +7,7 @@ const ENV: NodeJS.ProcessEnv = process.env;
 export const config: IConfig = {
   application: {
     port: _.toNumber(_.get(ENV, 'PORT', 3000)),
-    secret: _.get(ENV, 'SECRET', 'secret'),
+    secret: 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3',
   },
   rabbitmq: {
     urls: Helper.getArrayString(
