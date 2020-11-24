@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { FacebookInsightLvAccountByDateTaskModel } from '../facebook-insight/models';
 import { TaskMapping } from '../task/TaskMapping';
 import { tap } from 'rxjs/operators';
+import placeholder from 'lodash/fp/placeholder';
 
 @Injectable()
 export class ProducerService implements IProducerService {
@@ -24,12 +25,11 @@ export class ProducerService implements IProducerService {
   sendToFacebookInsight(
     content: FacebookInsightLvAccountByDateTaskModel,
   ): Observable<{ message: string }> {
-    const pattern = { cmd: 'FacebookInsightLvAccount' };
     const payload = this.taskMapping.deserializeToFacebookInsightLvAccountTask(
       content,
     );
     return this.facebookInsightClient
-      .send<{ message: string }>(pattern, payload)
+      .emit<{ message: string }>('FetchFacebookInsightLvAccount', payload)
       .pipe(
         tap(() => {
           this.logger.log(

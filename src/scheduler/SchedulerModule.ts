@@ -7,12 +7,13 @@ import { SchedulerService } from './SchedulerService';
 import { ProducerModule } from '../producer';
 
 @Module({
-  imports: [TaskModule, ProducerModule, CommonModule, ScheduleModule.forRoot()],
+  imports: [ScheduleModule.forRoot(), TaskModule, ProducerModule, CommonModule],
   providers: [
     {
       provide: Service.SCHEDULER,
       useClass: SchedulerService,
     },
   ],
+  exports: [Service.SCHEDULER],
 })
 export class SchedulerModule {}

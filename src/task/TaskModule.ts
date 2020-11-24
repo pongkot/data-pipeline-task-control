@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { Mapping, Service } from '../common/token';
 import { TaskService } from './TaskService';
 import { AdsAccountModule } from '../ads-account';
-import { CommonModule } from '../common/CommonModule';
+import { CommonModule } from '../common';
 import { ConfigurationModule } from '../configuration';
 import { EncryptionModule } from '../encryption';
 import { CostRateModule } from '../cost-rate';
