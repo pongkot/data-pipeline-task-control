@@ -3,13 +3,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { APP_LOGGER, Mapping, Service } from '../common/token';
 import { TaskService } from '../task';
 import { AppLogger, config } from '../common';
-import { FacebookInsightLvAccountByDateTaskModel } from '../facebook-insight/models';
 import { mergeMap } from 'rxjs/operators';
 import { TaskMapping } from '../task/TaskMapping';
 import { ProducerService } from '../producer';
 import dayjs from 'dayjs';
 import { Cron } from '@nestjs/schedule';
 import { IScheduler } from '../common/interfaces';
+import { FacebookInsightLvAccountTask } from '../task/model';
 
 const CronTime: IScheduler = config.scheduler;
 
@@ -33,8 +33,8 @@ export class SchedulerService implements ISchedulerService {
     this.taskService
       .getFacebookInsightLvAccountByDate(new Date(), new Date())
       .pipe(
-        mergeMap((task: FacebookInsightLvAccountByDateTaskModel) =>
-          this.producerService.sendToFacebookInsight(task),
+        mergeMap((task: FacebookInsightLvAccountTask) =>
+          this.producerService.sendToFacebookInsightLvAccount(task),
         ),
       )
       .subscribe();
@@ -46,8 +46,8 @@ export class SchedulerService implements ISchedulerService {
     this.taskService
       .getFacebookInsightLvAccountByDate(yesterday, yesterday)
       .pipe(
-        mergeMap((task: FacebookInsightLvAccountByDateTaskModel) =>
-          this.producerService.sendToFacebookInsight(task),
+        mergeMap((task: FacebookInsightLvAccountTask) =>
+          this.producerService.sendToFacebookInsightLvAccount(task),
         ),
       )
       .subscribe();

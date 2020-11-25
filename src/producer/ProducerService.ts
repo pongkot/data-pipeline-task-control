@@ -4,9 +4,9 @@ import { APP_LOGGER, Mapping, Queue } from '../common/token';
 import { AppLogger } from '../common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
-import { FacebookInsightLvAccountByDateTaskModel } from '../facebook-insight/models';
 import { TaskMapping } from '../task/TaskMapping';
 import { tap } from 'rxjs/operators';
+import { FacebookInsightLvAccountTask } from '../task/model';
 
 @Injectable()
 export class ProducerService implements IProducerService {
@@ -21,15 +21,11 @@ export class ProducerService implements IProducerService {
     this.logger.setContext('ProducerService');
   }
 
-  // TODO rename
-  sendToFacebookInsight(
-    content: FacebookInsightLvAccountByDateTaskModel,
+  sendToFacebookInsightLvAccount(
+    content: FacebookInsightLvAccountTask,
   ): Observable<{ message: string }> {
-    const payload = this.taskMapping.deserializeToFacebookInsightLvAccountTask(
-      content,
-    );
     return this.facebookInsightClient
-      .emit<{ message: string }>('FetchFacebookInsightLvAccount', payload)
+      .emit<{ message: string }>('FetchFacebookInsightLvAccount', content)
       .pipe(
         tap(() => {
           this.logger.log(
