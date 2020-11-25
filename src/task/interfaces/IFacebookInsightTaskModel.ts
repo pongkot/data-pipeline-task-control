@@ -4,3 +4,5 @@ export interface IFacebookInsightTaskModel {
   getFacebookAccessToken(): string;
   getCostRate(): number;
 }
+
+// TODO move

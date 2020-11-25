@@ -12,7 +12,10 @@ import { ConfigurationRepository } from '../configuration';
 import { IConfigurationModel } from '../configuration/interfaces';
 import { EncryptionService } from '../encryption';
 import { TaskMapping } from './TaskMapping';
-import { FacebookInsightLvAccountTask } from './model';
+import {
+  FacebookInsightLvAccountTask,
+  FacebookInsightLvCampaignTask,
+} from './model';
 
 @Injectable()
 export class TaskService implements ITaskService {
@@ -37,6 +40,33 @@ export class TaskService implements ITaskService {
     since: Date,
     until: Date,
   ): Observable<FacebookInsightLvAccountTask> {
+    return this.getFacebookInsightRequireFields().pipe(
+      map(
+        (adsAccountCostRate: {
+          adsAccountId: string;
+          status: string;
+          costRate: number;
+          accessToken: string;
+        }) =>
+          new FacebookInsightLvAccountTask(
+            {
+              accessToken: adsAccountCostRate.accessToken,
+              id: adsAccountCostRate.adsAccountId,
+              status: adsAccountCostRate.status,
+            },
+            adsAccountCostRate.costRate,
+            { since, until },
+          ),
+      ),
+    );
+  }
+
+  private getFacebookInsightRequireFields(): Observable<{
+    adsAccountId: string;
+    status: string;
+    costRate: number;
+    accessToken: string;
+  }> {
     return this.configurationRepository
       .getConfigById('FACEBOOK_ACCESS_TOKEN')
       .pipe(
@@ -68,25 +98,33 @@ export class TaskService implements ITaskService {
                     })),
                   ),
             ),
-            map(
-              (adsAccountCostRate: {
-                adsAccountId: string;
-                status: string;
-                costRate: number;
-                accessToken: string;
-              }) =>
-                new FacebookInsightLvAccountTask(
-                  {
-                    accessToken: adsAccountCostRate.accessToken,
-                    id: adsAccountCostRate.adsAccountId,
-                    status: adsAccountCostRate.status,
-                  },
-                  adsAccountCostRate.costRate,
-                  { since, until },
-                ),
-            ),
           );
         }),
       );
+  }
+
+  getFacebookInsightLvCampaignByDate(
+    since: Date,
+    until: Date,
+  ): Observable<FacebookInsightLvCampaignTask> {
+    return this.getFacebookInsightRequireFields().pipe(
+      map(
+        (adsAccountCostRate: {
+          adsAccountId: string;
+          status: string;
+          costRate: number;
+          accessToken: string;
+        }) =>
+          new FacebookInsightLvCampaignTask(
+            {
+              accessToken: adsAccountCostRate.accessToken,
+              id: adsAccountCostRate.adsAccountId,
+              status: adsAccountCostRate.status,
+            },
+            adsAccountCostRate.costRate,
+            { since, until },
+          ),
+      ),
+    );
   }
 }

@@ -7,7 +7,7 @@ import { mergeMap } from 'rxjs/operators';
 import { TaskMapping } from '../task/TaskMapping';
 import { ProducerService } from '../producer';
 import dayjs from 'dayjs';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { IScheduler } from '../common/interfaces';
 import { FacebookInsightLvAccountTask } from '../task/model';
 
