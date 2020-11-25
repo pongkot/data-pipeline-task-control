@@ -6,7 +6,10 @@ import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { TaskMapping } from '../task/TaskMapping';
 import { tap } from 'rxjs/operators';
-import { FacebookInsightLvAccountTask } from '../task/model';
+import {
+  FacebookInsightLvAccountTask,
+  FacebookInsightLvCampaignTask,
+} from '../task/model';
 
 @Injectable()
 export class ProducerService implements IProducerService {
@@ -25,11 +28,25 @@ export class ProducerService implements IProducerService {
     content: FacebookInsightLvAccountTask,
   ): Observable<{ message: string }> {
     return this.facebookInsightClient
-      .emit<{ message: string }>('FetchFacebookInsightLvAccount', content)
+      .emit<{ message: string }>('FetchFacebookInsightLvAccountTask', content)
       .pipe(
         tap(() => {
           this.logger.log(
-            `send FacebookInsightLvAccount task success; adsAccountId: ${content.getAdsAccountId()}`,
+            `FacebookInsightLvAccount task emitted; adsAccountId: ${content.getAdsAccountId()}`,
+          );
+        }),
+      );
+  }
+
+  sentToFacebookInsightLvCampaign(
+    content: FacebookInsightLvCampaignTask,
+  ): Observable<{ message: string }> {
+    return this.facebookInsightClient
+      .emit<{ message: string }>('FetchFacebookInsightLvCampaignTask', content)
+      .pipe(
+        tap(() => {
+          this.logger.log(
+            `FacebookInsightLvCampaign task emitted; adsAccountId: ${content.getAdsAccountId()}`,
           );
         }),
       );

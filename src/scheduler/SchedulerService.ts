@@ -9,7 +9,10 @@ import { ProducerService } from '../producer';
 import dayjs from 'dayjs';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { IScheduler } from '../common/interfaces';
-import { FacebookInsightLvAccountTask } from '../task/model';
+import {
+  FacebookInsightLvAccountTask,
+  FacebookInsightLvCampaignTask,
+} from '../task/model';
 
 const CronTime: IScheduler = config.scheduler;
 
@@ -28,9 +31,9 @@ export class SchedulerService implements ISchedulerService {
     this.logger.setContext('SchedulerService');
   }
 
-  @Cron(CronTime.facebookInsightLvAccountTodayTask)
+  // @Cron(CronTime.facebookInsight.lvAccount.today)
   // TODO for test
-  // @Cron(CronExpression.EVERY_10_SECONDS)
+  @Cron(CronExpression.EVERY_10_SECONDS)
   createFacebookInsightLvAccountTodayTask(): void {
     this.taskService
       .getFacebookInsightLvAccountByDate(new Date(), new Date())
@@ -42,7 +45,7 @@ export class SchedulerService implements ISchedulerService {
       .subscribe();
   }
 
-  @Cron(CronTime.facebookInsightLvAccountYesterday)
+  @Cron(CronTime.facebookInsight.lvAccount.yesterday)
   createFacebookInsightLvAccountYesterday(): void {
     const yesterday: Date = dayjs().add(-1).toDate();
     this.taskService
@@ -50,6 +53,31 @@ export class SchedulerService implements ISchedulerService {
       .pipe(
         mergeMap((task: FacebookInsightLvAccountTask) =>
           this.producerService.sendToFacebookInsightLvAccount(task),
+        ),
+      )
+      .subscribe();
+  }
+
+  @Cron(CronTime.facebookInsight.lvCampaign.today)
+  createFacebookInsightLvCampaignTodayTask(): void {
+    this.taskService
+      .getFacebookInsightLvCampaignByDate(new Date(), new Date())
+      .pipe(
+        mergeMap((task: FacebookInsightLvCampaignTask) =>
+          this.producerService.sentToFacebookInsightLvCampaign(task),
+        ),
+      )
+      .subscribe();
+  }
+
+  @Cron(CronTime.facebookInsight.lvCampaign.yesterday)
+  createFacebookInsightLvCampaignYesterdayTask(): void {
+    const yesterday: Date = dayjs().add(-1).toDate();
+    this.taskService
+      .getFacebookInsightLvCampaignByDate(yesterday, yesterday)
+      .pipe(
+        mergeMap((task: FacebookInsightLvCampaignTask) =>
+          this.producerService.sentToFacebookInsightLvCampaign(task),
         ),
       )
       .subscribe();

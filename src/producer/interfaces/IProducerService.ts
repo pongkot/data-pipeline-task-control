@@ -1,8 +1,15 @@
 import { Observable } from 'rxjs';
-import { FacebookInsightLvAccountTask } from '../../task/model';
+import {
+  FacebookInsightLvAccountTask,
+  FacebookInsightLvCampaignTask,
+} from '../../task/model';
 
 export interface IProducerService {
   sendToFacebookInsightLvAccount(
     content: FacebookInsightLvAccountTask,
+  ): Observable<{ message: string }>;
+
+  sentToFacebookInsightLvCampaign(
+    content: FacebookInsightLvCampaignTask,
   ): Observable<{ message: string }>;
 }

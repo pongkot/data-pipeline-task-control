@@ -6,16 +6,32 @@ const ENV: NodeJS.ProcessEnv = process.env;
 
 export const config: IConfig = {
   scheduler: {
-    facebookInsightLvAccountTodayTask: _.get(
-      ENV,
-      'CRONJOB_FACEBOOK_INSIGHT_ACCOUNT_TODAY',
-      '0 6,12,19,21 * * *',
-    ),
-    facebookInsightLvAccountYesterday: _.get(
-      ENV,
-      'CRONJOB_FACEBOOK_INSIGHT_ACCOUNT_YESTERDAY',
-      '0 6,19 * * *',
-    ),
+    facebookInsight: {
+      lvAccount: {
+        today: _.get(
+          ENV,
+          'CRONJOB_FACEBOOK_INSIGHT_ACCOUNT_TODAY',
+          '0 6,12,19,21 * * *',
+        ),
+        yesterday: _.get(
+          ENV,
+          'CRONJOB_FACEBOOK_INSIGHT_ACCOUNT_YESTERDAY',
+          '0 6,19 * * *',
+        ),
+      },
+      lvCampaign: {
+        today: _.get(
+          ENV,
+          'CRONJOB_FACEBOOK_INSIGHT_CAMPAIGN_TODAY',
+          '0 6,12,19,21 * * *',
+        ),
+        yesterday: _.get(
+          ENV,
+          'CRONJOB_FACEBOOK_INSIGHT_CAMPAIGN_YESTERDAY',
+          '0 6,19 * * *',
+        ),
+      },
+    },
   },
   application: {
     port: _.toNumber(_.get(ENV, 'PORT', 3000)),

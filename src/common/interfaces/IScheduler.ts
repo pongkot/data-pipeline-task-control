@@ -1,4 +1,12 @@
 export interface IScheduler {
-  facebookInsightLvAccountTodayTask: string;
-  facebookInsightLvAccountYesterday: string;
+  facebookInsight: {
+    lvAccount: {
+      today: string;
+      yesterday: string;
+    };
+    lvCampaign: {
+      today: string;
+      yesterday: string;
+    };
+  };
 }
