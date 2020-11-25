@@ -29,6 +29,8 @@ export class SchedulerService implements ISchedulerService {
   }
 
   @Cron(CronTime.facebookInsightLvAccountTodayTask)
+  // TODO for test
+  // @Cron(CronExpression.EVERY_10_SECONDS)
   createFacebookInsightLvAccountTodayTask(): void {
     this.taskService
       .getFacebookInsightLvAccountByDate(new Date(), new Date())
