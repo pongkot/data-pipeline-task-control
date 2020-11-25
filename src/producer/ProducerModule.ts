@@ -3,7 +3,7 @@ import { ProducerService } from './ProducerService';
 import { Service } from '../common/token';
 import { CommonModule } from '../common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { Queue } from '../common/token/Queue';
+import { Queue } from '../common/token';
 import { TaskModule } from '../task';
 import { config } from '../common';
 

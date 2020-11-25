@@ -1,7 +1,5 @@
-import { Observable } from 'rxjs';
-
 export interface ISchedulerService {
-  createFacebookInsightLvAccountTodayTask(): Observable<{ message: string }>;
+  createFacebookInsightLvAccountTodayTask(): void;
 
-  createFacebookInsightLvAccountYesterday(): Observable<{ message: string }>;
+  createFacebookInsightLvAccountYesterday(): void;
 }

@@ -2,14 +2,17 @@ import { ISchedulerService } from './interfaces';
 import { Inject, Injectable } from '@nestjs/common';
 import { APP_LOGGER, Mapping, Service } from '../common/token';
 import { TaskService } from '../task';
-import { AppLogger } from '../common';
-import { Cron } from '@nestjs/schedule';
+import { AppLogger, config } from '../common';
 import { Observable } from 'rxjs';
 import { FacebookInsightLvAccountByDateTaskModel } from '../facebook-insight/models';
 import { mergeMap } from 'rxjs/operators';
 import { TaskMapping } from '../task/TaskMapping';
 import { ProducerService } from '../producer';
 import dayjs from 'dayjs';
+import { Cron } from '@nestjs/schedule';
+import { IScheduler } from '../common/interfaces';
+
+const CronTime: IScheduler = config.scheduler;
 
 @Injectable()
 export class SchedulerService implements ISchedulerService {
@@ -26,28 +29,28 @@ export class SchedulerService implements ISchedulerService {
     this.logger.setContext('SchedulerService');
   }
 
-  @Cron('0 6,12,19,21 * * *')
-  createFacebookInsightLvAccountTodayTask(): Observable<{
-    message: string;
-  }> {
-    return this.taskService
+  @Cron(CronTime.facebookInsightLvAccountTodayTask)
+  createFacebookInsightLvAccountTodayTask(): void {
+    this.taskService
       .getFacebookInsightLvAccountByDate(new Date(), new Date())
       .pipe(
         mergeMap((task: FacebookInsightLvAccountByDateTaskModel) =>
           this.producerService.sendToFacebookInsight(task),
         ),
-      );
+      )
+      .subscribe();
   }
 
-  @Cron('0 6,19 * * *')
-  createFacebookInsightLvAccountYesterday(): Observable<{ message: string }> {
+  @Cron(CronTime.facebookInsightLvAccountYesterday)
+  createFacebookInsightLvAccountYesterday(): void {
     const yesterday: Date = dayjs().add(-1).toDate();
-    return this.taskService
+    this.taskService
       .getFacebookInsightLvAccountByDate(yesterday, yesterday)
       .pipe(
         mergeMap((task: FacebookInsightLvAccountByDateTaskModel) =>
           this.producerService.sendToFacebookInsight(task),
         ),
-      );
+      )
+      .subscribe();
   }
 }
