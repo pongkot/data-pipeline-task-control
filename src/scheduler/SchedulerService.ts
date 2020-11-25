@@ -3,7 +3,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { APP_LOGGER, Mapping, Service } from '../common/token';
 import { TaskService } from '../task';
 import { AppLogger, config } from '../common';
-import { Observable } from 'rxjs';
 import { FacebookInsightLvAccountByDateTaskModel } from '../facebook-insight/models';
 import { mergeMap } from 'rxjs/operators';
 import { TaskMapping } from '../task/TaskMapping';
