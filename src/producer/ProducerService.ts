@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { FacebookInsightLvAccountByDateTaskModel } from '../facebook-insight/models';
 import { TaskMapping } from '../task/TaskMapping';
 import { tap } from 'rxjs/operators';
-import placeholder from 'lodash/fp/placeholder';
 
 @Injectable()
 export class ProducerService implements IProducerService {
